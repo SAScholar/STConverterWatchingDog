@@ -1,4 +1,4 @@
-# -*-coding:Utf-8 -*-
+# -*-coding:utf-8 -*-
 import json
 import logging
 import time
@@ -12,7 +12,6 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
-logger = logging.getLogger(__name__)
 site = Site('zh', 'wikipedia')
 
 # OpenCC
@@ -34,7 +33,7 @@ def is_exist(title: str) -> bool:
 def change_target(page: Page, target: Page) -> None:
     page.set_redirect_target(target_page=target, create=False, force=False)
     page.save()
-    logger.info("机器人已修改页面{target_page}的重定向目标为{target}".format(target_page=page.title(), target=target.title()))
+    logging.info("机器人已修改页面{target_page}的重定向目标为{target}".format(target_page=page.title(), target=target.title()))
 
 def get_recentchanges() -> any:
     lock = FileLock("record.json.lock", timeout=5)
@@ -59,17 +58,17 @@ def get_recentchanges() -> any:
                 else:
                     continue
     except CircularRedirectError:
-        logger.error("A CircularRedirectError was raised while the bot was checking {page}".format(page=page.title()))
+        logging.error("A CircularRedirectError was raised while the bot was checking {page}".format(page=page.title()))
     except InterwikiRedirectPageError:
-        logger.error("A InterwikiRedirectPageError was raised while the bot was checking {page}".format(page=page.title()))
+        logging.error("A InterwikiRedirectPageError was raised while the bot was checking {page}".format(page=page.title()))
     except IsNotRedirectPageError:
-        logger.error("A IsNotRedirectPageError was raised while the bot was checking {page}".format(page=page.title()))
+        logging.error("A IsNotRedirectPageError was raised while the bot was checking {page}".format(page=page.title()))
     except RuntimeError:
-        logger.error("A RuntimeError was raised while checking {page}".format(page=page.title()))
+        logging.error("A RuntimeError was raised while checking {page}".format(page=page.title()))
     except SectionError:
-        logger.error("A SectionError was raised while checking {page}".format(page=page.title()))
+        logging.error("A SectionError was raised while checking {page}".format(page=page.title()))
     except:
-        logger.error("An unknown error was raised while checking {page}".format(page=page.title()))
+        logging.error("An unknown error was raised while checking {page}".format(page=page.title()))
     finally:
         return target_list
 
@@ -93,7 +92,7 @@ def main() -> None:
                         if page.isRedirectPage():
                             change_target(page, target)
                         else:
-                            logger.warning("机器人计划修改{pagename}，但该页面不是重定向或不存在。".format(pagename=page.title()))
+                            logging.warning("机器人计划修改{pagename}，但该页面不是重定向或不存在。".format(pagename=page.title()))
         else:
             time.sleep(30)
 
