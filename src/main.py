@@ -20,7 +20,7 @@ s2twc = OpenCC('s2tw.json')
 s2hkc = OpenCC('s2hk.json')
 t2sc = OpenCC('t2s.json')
 tw2sc = OpenCC('tw2t.json')
-hk2sc = OpenCC('hkt2s.json')
+hk2sc = OpenCC('hk2s.json')
 
 
 def is_exist(title: str) -> bool:
