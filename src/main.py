@@ -1,3 +1,4 @@
+# -*-coding:Utf-8 -*-
 import json
 import logging
 import time
@@ -95,3 +96,6 @@ def main() -> None:
                             logger.warning("机器人计划修改{pagename}，但该页面不是重定向或不存在。".format(pagename=page.title()))
         else:
             time.sleep(30)
+
+if __name__ == '__main__':
+    main()
