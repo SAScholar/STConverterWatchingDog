@@ -78,17 +78,17 @@ def main() -> None:
         if rc:
             for title, target in rc:
                 if is_exist(title):
-                    reserve_title_list = []
+                    t_title_list = []
                     if title == s2tc.convert(title):
-                        reserve_title_list.append(s2tc.convert(title))
-                        reserve_title_list.append(s2hkc.convert(title))
-                        reserve_title_list.append(s2twc.convert(title))
+                        t_title_list.append(s2tc.convert(title))
+                        t_title_list.append(s2hkc.convert(title))
+                        t_title_list.append(s2twc.convert(title))
                     else:
-                        reserve_title_list.append(t2sc.convert(title))
-                        reserve_title_list.append(hk2sc.convert(title))
-                        reserve_title_list.append(tw2sc.convert(title))
-                    for reserve_title in reserve_title_list:
-                        page = Page(site, reserve_title)
+                        t_title_list.append(t2sc.convert(title))
+                        t_title_list.append(hk2sc.convert(title))
+                        t_title_list.append(tw2sc.convert(title))
+                    for t_title in t_title_list:
+                        page = Page(site, t_title)
                         if page.isRedirectPage():
                             change_target(page, target)
                         else:
