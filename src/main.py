@@ -48,7 +48,7 @@ def get_recentchanges() -> any:
                 tag="mw-changed-redirect-target" # 仅侦测修改重定向目标的编辑
             )
             for page in recentchanges:
-                if page.latest_revision_id not in data["done"]:
+                if page.latest_revision_id not in data["done"] and page.latest_revision.user != "Shio-bot":
                     target = page.getRedirectTarget()
                     page_tuple = (page.title(), target)
                     target_list.append(page_tuple)
