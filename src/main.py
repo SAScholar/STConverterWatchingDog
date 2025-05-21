@@ -48,7 +48,7 @@ def get_recentchanges() -> any:
                 tag="mw-changed-redirect-target" # 仅侦测修改重定向目标的编辑
             )
             for page in recentchanges:
-                if page.latest_revision_id not in data["done"] and page.latest_revision.user != "Shio-bot":
+                if page.latest_revision_id not in data["done"] and page.latest_revision.user != "Shio-bot" and page.isRedirectPage():
                     target = page.getRedirectTarget()
                     page_tuple = (page.title(), target)
                     target_list.append(page_tuple)
@@ -89,10 +89,10 @@ def main() -> None:
                         t_title_list.append(tw2sc.convert(title))
                     for t_title in t_title_list:
                         page = Page(site, t_title)
-                        if page.isRedirectPage():
+                        if page.isRedirectPage() and page != target:
                             change_target(page, target)
                         else:
-                            logging.warning("机器人计划修改{pagename}，但该页面不是重定向或不存在。".format(pagename=page.title()))
+                            logging.warning("机器人计划修改{pagename}，但该页面不是重定向、不需要修改或不存在。".format(pagename=page.title()))
         else:
             time.sleep(30)
 
